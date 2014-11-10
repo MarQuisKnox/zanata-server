@@ -57,6 +57,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -64,6 +65,7 @@ import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.contexts.ServletLifecycle;
 import org.jboss.seam.core.Events;
+import org.jboss.seam.mail.MailSession;
 import org.zanata.exception.ZanataInitializationException;
 import org.zanata.rest.dto.VersionInfo;
 import org.zanata.util.VersionUtility;
@@ -166,9 +168,10 @@ public class ZanataInit {
         }
 
         // Email server information
-        log.info("Notification Email Host: "
-                + this.applicationConfiguration.getEmailServerHost() + ":"
-                + this.applicationConfiguration.getEmailServerPort());
+        MailSession mailSession = (MailSession) Component.forName(
+                "org.jboss.seam.mail.mailSession").newInstance();
+        log.info("Mail Session (JNDI): {}",
+                mailSession.getSessionJndiName());
 
         Events.instance().raiseEvent(EVENT_Zanata_Startup);
 
