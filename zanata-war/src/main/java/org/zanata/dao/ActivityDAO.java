@@ -201,8 +201,8 @@ public class ActivityDAO extends AbstractDAOImpl<Activity, Long> {
      * Documents reviewed
      *
      * @param personId
-     * @param startOfDay
-     * @param endOfTheDay
+     * @param startDate
+     * @param endDate
      * @return
      */
     public int[] getReviewedStats(Long personId, Date startDate, Date endDate) {
