@@ -46,7 +46,13 @@
             <f:param name="slug" value="#{result.project.slug}"/>
           </s:link>
 
-          <s:link view="/search.xhtml" rendered="#{result.isProjectNull()}">
+          <s:link propagation="none" view="/profile/home.xhtml"
+            rendered="#{!result.isUserNull()}">
+            <i class="i i--user"></i> #{result.account.username}
+            <f:param name="username" value="#{result.account.username}"/>
+          </s:link>
+
+          <s:link view="/search.xhtml" rendered="#{result.isProjectNull() and result.isUserNull()}">
             <i class="i i--search"></i> Search Zanata for
             '#{projectSearch.projectAutocomplete.query}'
             <f:param name="query" value="#{projectSearch.projectAutocomplete.query}"/>
